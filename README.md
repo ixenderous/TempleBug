@@ -10,6 +10,6 @@ Reintroduces the temple bug that allowed for extra cash generation in CHIMPS mod
 
 Warning: This currently doesnt function exactly like the original temple bug. The original temple bug could stack with multiple temples while this only ports the vanilla support temple extra cash behaviour which does not stack (I think) to CHIMPS. I will re-add the bug as it was once I can research how it actually functioned, although this is good enough for now.
 
-Tested with 400 temple in chimps. Untested with TSG but it 99% probably works.
+Tested with 4xx temple in chimps. Untested with TSG but it 99% probably works.
 
 [![Requires BTD6 Mod Helper](https://raw.githubusercontent.com/gurrenm3/BTD-Mod-Helper/master/banner.png)](https://github.com/gurrenm3/BTD-Mod-Helper#readme)
