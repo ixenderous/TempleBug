@@ -1,10 +1,11 @@
-using MelonLoader;
 using BTD_Mod_Helper;
 using BTD_Mod_Helper.Extensions;
 using Il2CppAssets.Scripts.Models;
+using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors;
 using Il2CppAssets.Scripts.Models.Towers.Mutators;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
+using MelonLoader;
 using TempleBug;
 
 [assembly: MelonInfo(typeof(TempleBug.TempleBug), ModHelperData.Name, ModHelperData.Version, ModHelperData.RepoOwner)]
@@ -33,37 +34,49 @@ namespace TempleBug
 
             var superMonkeys = result.GetTowersWithBaseId("SuperMonkey");
 
-            foreach (var tower in superMonkeys)
+            foreach (var tower in superMonkeys.ToList())
             {
-                if (tower.tiers[0] != 4 && tower.tiers[0] != 5)
-                    continue;
-
-                string mutatorModelName = tower.tiers[0] == 4
-                    ? "TempleTowerMutatorGroupTierOneModel_Support_4001_"
-                    : "TempleTowerMutatorGroupTierTwoModel_Support_4001_";
-
-                var model = tower.GetBehaviors<TempleTowerMutatorGroupTierOneModel>()
-                    .Find(model => model.name == mutatorModelName);
-
-                if (model == null)
-                    continue;
-
-                int mutatorIndex = model.mutators.FindIndex(m => m.name == "AddBehaviorToTowerMutatorModel_4001_");
-                if (mutatorIndex == -1)
-                    continue;
-
-                var mutator = model.mutators[mutatorIndex].TryCast<AddBehaviorToTowerMutatorModel>();
-                if (mutator == null) continue;
-
-                foreach (var behaviour in mutator.behaviors)
+                if (tower.tiers[0] == 4)
                 {
-                    var bonusCashModel = behaviour.TryCast<BonusCashZoneModel>();
-                    if (bonusCashModel != null)
+                    var tierOneModel = tower.GetBehaviors<TempleTowerMutatorGroupTierOneModel>().Find(m => m.name == "TempleTowerMutatorGroupTierOneModel_Support_25001_");
+                    if (tierOneModel == null) continue;
+
+                    foreach (var mut in tierOneModel.mutators)
                     {
-                        bonusCashModel.multiplier = CASH_MULTIPLIER;
-                        break;
+                        var addModel = mut.TryCast<AddBehaviorToTowerMutatorModel>();
+                        if (addModel == null) continue;
+
+                        foreach (var behavior in addModel.behaviors)
+                        {
+                            var bonusCashModel = behavior.TryCast<BonusCashZoneModel>();
+                            if (bonusCashModel != null)
+                            {
+                                bonusCashModel.multiplier = CASH_MULTIPLIER;
+                                break;
+                            }
+                        }
                     }
-                }              
+                } else if (tower.tiers[0] == 5)
+                {
+                    var tierTwoModel = tower.GetBehaviors<TempleTowerMutatorGroupTierTwoModel>().Find(m => m.name == "TempleTowerMutatorGroupTierTwoModel_Support_25001_");
+                    if (tierTwoModel == null) continue;
+
+                    foreach (var mut in tierTwoModel.mutators)
+                    {
+                        var addModel = mut.TryCast<AddBehaviorToTowerMutatorModel>();
+                        if (addModel == null) continue;
+
+                        foreach (var behavior in addModel.behaviors)
+                        {
+                            var bonusCashModel = behavior.TryCast<BonusCashZoneModel>();
+                            if (bonusCashModel != null)
+                            {
+                                bonusCashModel.multiplier = CASH_MULTIPLIER;
+                                break;
+                            }
+                        }
+                    }
+                }           
             }
         }
     }

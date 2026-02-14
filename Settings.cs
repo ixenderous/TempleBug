@@ -7,7 +7,7 @@ namespace TempleBug
     {
         public static readonly ModSettingBool ModEnabled = new(true)
         {
-            description = "While enabled, in CHIMPS mode temples & tsg with atleast $4,001 support sacrifice will have their 1.5x BonusCashZoneModel active. Requires being active when joining the match."
+            description = "While enabled, in CHIMPS mode temples & tsg with atleast $25,001 support sacrifice will have their 1.5x BonusCashZoneModel active. Requires being active when joining the match."
         };
     }
 }
